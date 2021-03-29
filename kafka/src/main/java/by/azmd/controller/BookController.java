@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("books")
 @RequiredArgsConstructor
-public class AddBookController {
+public class BookController {
     private final KafkaService kafkaService;
 
     // add book

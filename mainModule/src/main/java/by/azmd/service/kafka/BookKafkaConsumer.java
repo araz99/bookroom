@@ -1,7 +1,6 @@
 package by.azmd.service.kafka;
 
 import by.azmd.dto.BookDTO;
-import by.azmd.entity.Book;
 import by.azmd.mapper.BookMapper;
 import by.azmd.service.BookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
