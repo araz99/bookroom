@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 public class KafkaService {
 
     private final BookKafkaProducer producer;
+    private final ObjectMapper mapper;
 
     @SneakyThrows
     public BookDTO send(BookDTO bookDTO) {
-        ObjectMapper mapper = new ObjectMapper();
         producer.sendMessage(mapper.writeValueAsString(bookDTO));
         return bookDTO;
     }
