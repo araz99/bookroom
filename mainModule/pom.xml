@@ -10,17 +10,4 @@
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mainModule</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>by.azmd</groupId>
-            <artifactId>domain</artifactId>
-            <version>version1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>by.azmd</groupId>
-            <artifactId>kafka</artifactId>
-            <version>version1.0</version>
-        </dependency>
-    </dependencies>
 </project>
