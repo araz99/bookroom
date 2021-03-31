@@ -8,6 +8,7 @@ import by.azmd.entity.User;
 import by.azmd.mapper.DtoMapper;
 import by.azmd.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,6 +19,8 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class OrderService {
 
+    @Value("${user.books.quantity}")
+    private int quantityBooks;
     private final UserService userService;
     private final BookService bookService;
     private final DtoMapper<BookDTO, Book> bookMapper;
@@ -27,7 +30,7 @@ public class OrderService {
         User user = userService.getAuthenticationUser();
         Book book = bookMapper.toEntity(bookService.getBook(orderDTO.getBookName()));
         if (!book.isEmpty()) {
-            if (!book.isBusy() && user.getQuantityBook() < 5) {
+            if (!book.isBusy() && user.getQuantityBook() < quantityBooks) {
                 LocalDate days = LocalDate.now().plusDays(orderDTO.getQuantityDays());
                 Order order = new Order(user.getId(), book.getId(), days);
                 userService.updateQuantityBook(user.getQuantityBook() + 1, user.getId());

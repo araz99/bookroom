@@ -1,11 +1,14 @@
 package by.azmd.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
 import java.time.LocalDate;
 
 @Entity
@@ -19,11 +22,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NonNull
     @Column(name = "user_id")
-    @NonNull
     private Long userId;
-    @Column(name = "book_id", unique = true)
     @NonNull
+    @Column(name = "book_id", unique = true)
     private Long bookId;
     @NonNull
     @Column(name = "order_date")
