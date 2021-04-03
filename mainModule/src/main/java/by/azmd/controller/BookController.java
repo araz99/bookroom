@@ -54,7 +54,6 @@ public class BookController {
                         publisher,
                         yearEdition,
                         translator,
-                        description,
-                        busy);
+                        description);
     }
 }

@@ -4,18 +4,16 @@ import by.azmd.dto.BookDTO;
 import by.azmd.entity.Book;
 import by.azmd.mapper.DtoMapper;
 import by.azmd.repository.BookRepository;
-
-import static by.azmd.specification.BookSpecification.*;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static by.azmd.specification.BookSpecification.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,17 +29,15 @@ public class BookService {
             String publisher,
             String yearEdition,
             String translator,
-            String description,
-            String busy
+            String description
     ) {
         return bookRepository.findAll(
                 hasName(name)
-                .and(hasAuthor(author))
-                .and(hasPublisher(publisher))
-                .and(hasYearEdition(yearEdition))
-                .and(hasTranslator(translator))
-                .and(hasDescription(description))
-                .and(hasBusy(busy))
+                        .and(hasAuthor(author))
+                        .and(hasPublisher(publisher))
+                        .and(hasYearEdition(yearEdition))
+                        .and(hasTranslator(translator))
+                        .and(hasDescription(description))
         ).stream().map(bookMapper::toDTO).collect(Collectors.toList());
     }
 
