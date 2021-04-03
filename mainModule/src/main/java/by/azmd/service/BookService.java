@@ -2,6 +2,7 @@ package by.azmd.service;
 
 import by.azmd.dto.BookDTO;
 import by.azmd.entity.Book;
+import by.azmd.mapper.BookMapper;
 import by.azmd.mapper.DtoMapper;
 import by.azmd.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -72,5 +73,9 @@ public class BookService {
 
     public void updateBusy(boolean busy, Long bookId) {
         bookRepository.updateByBusy(busy, bookId);
+    }
+
+    public List<BookDTO> getBusyBooks() {
+        return bookRepository.findBooksByBusy(true).stream().map(bookMapper::toDTO).collect(Collectors.toList());
     }
 }

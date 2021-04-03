@@ -38,8 +38,7 @@ public class UserService {
 
     protected User getAuthenticationUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByUsername(auth.getName());
-        return user;
+        return userRepository.findByUsername(auth.getName());
     }
 
     public void updateQuantityBook(int quantityBook, Long userID) {
