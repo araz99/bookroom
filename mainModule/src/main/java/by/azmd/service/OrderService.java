@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -71,5 +72,9 @@ public class OrderService {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found!");
         } else
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found!");
+    }
+
+    public List<Order> getAllReserves() {
+        return orderRepository.findAll();
     }
 }

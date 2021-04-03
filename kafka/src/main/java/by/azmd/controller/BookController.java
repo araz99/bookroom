@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("books")
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class BookController {
 
     // add book
     @PostMapping
-    public BookDTO addBook(@RequestBody BookDTO bookDTO) {
-        return kafkaService.send(bookDTO);
+    public List<BookDTO> addBook(@RequestBody List<BookDTO> bookDTOList) {
+        return kafkaService.send(bookDTOList);
     }
 }

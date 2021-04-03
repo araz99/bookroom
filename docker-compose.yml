@@ -1,10 +1,10 @@
 version: '3'
 services:
   mysql-db:
-    image: mysql:8.0.23
+    image: mysql
     container_name: mysql-db
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: bookroom
     ports:
       - 3306:3306

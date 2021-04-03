@@ -2,6 +2,7 @@ package by.azmd.service;
 
 import by.azmd.dto.BookDTO;
 import by.azmd.entity.Book;
+import by.azmd.mapper.BookMapper;
 import by.azmd.mapper.DtoMapper;
 import by.azmd.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static by.azmd.specification.BookSpecification.*;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
@@ -20,6 +23,24 @@ public class BookService {
     private final BookRepository bookRepository;
     private final DtoMapper<BookDTO, Book> bookMapper;
 
+    // filter
+    public List<BookDTO> getBooks(
+            String name,
+            String author,
+            String publisher,
+            String yearEdition,
+            String translator,
+            String description
+    ) {
+        return bookRepository.findAll(
+                hasName(name)
+                        .and(hasAuthor(author))
+                        .and(hasPublisher(publisher))
+                        .and(hasYearEdition(yearEdition))
+                        .and(hasTranslator(translator))
+                        .and(hasDescription(description))
+        ).stream().map(bookMapper::toDTO).collect(Collectors.toList());
+    }
 
     public List<BookDTO> getAllBooks() {
         return bookRepository.findAll().stream().map(bookMapper::toDTO).collect(Collectors.toList());
@@ -33,7 +54,7 @@ public class BookService {
         Book book = bookRepository.findByName(name);
         if (book != null)
             return bookMapper.toDTO(book);
-        throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found");
     }
 
     public List<BookDTO> getBooksByAuthor(String author) {
@@ -52,5 +73,9 @@ public class BookService {
 
     public void updateBusy(boolean busy, Long bookId) {
         bookRepository.updateByBusy(busy, bookId);
+    }
+
+    public List<BookDTO> getBusyBooks() {
+        return bookRepository.findBooksByBusy(true).stream().map(bookMapper::toDTO).collect(Collectors.toList());
     }
 }
