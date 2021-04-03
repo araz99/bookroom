@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class KafkaService {
@@ -14,8 +16,9 @@ public class KafkaService {
     private final ObjectMapper mapper;
 
     @SneakyThrows
-    public BookDTO send(BookDTO bookDTO) {
-        producer.sendMessage(mapper.writeValueAsString(bookDTO));
-        return bookDTO;
+    public List<BookDTO> send(List<BookDTO> bookDTOList) {
+        for (BookDTO bookDTO : bookDTOList)
+             producer.sendMessage(mapper.writeValueAsString(bookDTO));
+        return bookDTOList;
     }
 }

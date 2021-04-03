@@ -4,9 +4,13 @@ import by.azmd.dto.BookDTO;
 import by.azmd.entity.Book;
 import by.azmd.mapper.DtoMapper;
 import by.azmd.repository.BookRepository;
+
+import static by.azmd.specification.BookSpecification.*;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -20,6 +24,26 @@ public class BookService {
     private final BookRepository bookRepository;
     private final DtoMapper<BookDTO, Book> bookMapper;
 
+    // filter
+    public List<BookDTO> getBooks(
+            String name,
+            String author,
+            String publisher,
+            String yearEdition,
+            String translator,
+            String description,
+            String busy
+    ) {
+        return bookRepository.findAll(
+                hasName(name)
+                .and(hasAuthor(author))
+                .and(hasPublisher(publisher))
+                .and(hasYearEdition(yearEdition))
+                .and(hasTranslator(translator))
+                .and(hasDescription(description))
+                .and(hasBusy(busy))
+        ).stream().map(bookMapper::toDTO).collect(Collectors.toList());
+    }
 
     public List<BookDTO> getAllBooks() {
         return bookRepository.findAll().stream().map(bookMapper::toDTO).collect(Collectors.toList());
@@ -33,7 +57,7 @@ public class BookService {
         Book book = bookRepository.findByName(name);
         if (book != null)
             return bookMapper.toDTO(book);
-        throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found");
     }
 
     public List<BookDTO> getBooksByAuthor(String author) {
