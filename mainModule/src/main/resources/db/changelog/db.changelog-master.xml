@@ -1,0 +1,62 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Araz" id="init_v1.0">
+        <createTable tableName="book">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="author" type="BIT(1)"/>
+            <column name="publisher" type="VARCHAR(255)"/>
+            <column name="year_edition" type="integer"/>
+            <column name="translator" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="busy" type="bit"/>
+        </createTable>
+
+        <createTable tableName="user_bk">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity_book" type="integer" defaultValue="0"/>
+        </createTable>
+
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_bk_roles">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="user_id" referencedTableName="user_bk"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="roles_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="roles_id" referencedTableName="roles"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet author="Araz" id="init_v1.1">
+        <addUniqueConstraint tableName="user_bk_roles" columnNames="user_id, roles_id"/>
+    </changeSet>
+</databaseChangeLog>
