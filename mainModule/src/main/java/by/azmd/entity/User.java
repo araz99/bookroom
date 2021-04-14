@@ -3,6 +3,7 @@ package by.azmd.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_bk")
@@ -12,16 +13,20 @@ import javax.persistence.*;
 @ToString(exclude = {"id", "password", "quantityBook"})
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
+    @Column(name = "username")
     private String username;
+
     @NonNull
+    @Column(name = "password")
     private String password;
+
     @Column(name = "quantity_book")
     private int quantityBook;
-    @NonNull
-    @Enumerated(EnumType.STRING)
-    private Role role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 }

@@ -1,7 +1,6 @@
 package by.azmd.service;
 
 import by.azmd.dto.UserDTO;
-import by.azmd.entity.Role;
 import by.azmd.entity.User;
 import by.azmd.mapper.DtoMapper;
 import by.azmd.repository.UserRepository;
@@ -19,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
     private final DtoMapper<UserDTO, User> mapper;
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
     public ResponseEntity<UserDTO> addNewUser(UserDTO userDTO) {
         User user = userRepository.findByUsername(userDTO.getUsername());
@@ -32,8 +32,9 @@ public class UserService {
     private void saveUser(UserDTO dto) {
         User user = mapper.toEntity(dto);
         user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
-        user.setRole(Role.USER);
         userRepository.save(user);
+        userRepository.flush();
+        roleService.setRoleUser(userRepository.findByUsername(user.getUsername()).getId());
     }
 
     protected User getAuthenticationUser() {
