@@ -5,10 +5,13 @@ import by.azmd.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public class UserMapper implements DtoMapper<UserDTO, User> {
     private final ObjectMapper mapper;
 
+    Map
     public UserMapper(ObjectMapper mapper) {
         this.mapper = mapper;
     }

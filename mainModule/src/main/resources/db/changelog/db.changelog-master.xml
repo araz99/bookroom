@@ -13,12 +13,12 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
-            <column name="author" type="BIT(1)"/>
+            <column name="author" type="VARCHAR(255)"/>
             <column name="publisher" type="VARCHAR(255)"/>
             <column name="year_edition" type="integer"/>
             <column name="translator" type="VARCHAR(255)"/>
             <column name="description" type="VARCHAR(255)"/>
-            <column name="busy" type="bit"/>
+            <column name="busy" type="BIT(1)"/>
         </createTable>
 
         <createTable tableName="user_bk">

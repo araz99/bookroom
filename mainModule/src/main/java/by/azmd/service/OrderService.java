@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
 
-    @Value("${user.books.quantity}")
+    @Value("${bookRoom.user.numberOfBooksUserCanGet}")
     private int quantityBooks;
     private final UserService userService;
     private final BookService bookService;

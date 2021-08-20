@@ -19,7 +19,7 @@ public class AdminController {
     private final BookService bookService;
     private final OrderService orderService;
 
-    @GetMapping("/isBusyBooks")
+    @GetMapping("/busyBooks")
     public List<BookDTO> getBusyBooks() {
         return bookService.getBusyBooks();
     }
